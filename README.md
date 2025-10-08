@@ -111,4 +111,4 @@ License
 MIT
 
 
-![Image]("C:\Users\VICTUS\Desktop\Gaurav\ai-vibe-chat\Screenshot 2025-10-08 161720.png")
+![Image]("Screenshot 2025-10-08 161720.png")
