@@ -106,7 +106,7 @@ Open Task Ideas
 - Add simple config file support (YAML/TOML)
 - Add optional TTS output
 
-[Image](Screenshot 2025-10-08 161720.png)
+![Image](Screenshot 2025-10-08 161720.png)
 
 License
 
