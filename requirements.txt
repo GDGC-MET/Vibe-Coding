@@ -1,0 +1,7 @@
+click>=8.1.7
+colorama>=0.4.6
+
+# Optional/dev (comment the ones you don't need)
+# rich>=13.7.1
+# pyttsx3>=2.90
+# pyyaml>=6.0.2
