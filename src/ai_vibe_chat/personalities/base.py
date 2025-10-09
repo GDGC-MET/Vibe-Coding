@@ -7,4 +7,3 @@ class BasePersonality:
     def style_response(self, provider_text: str) -> str:
         return provider_text
 
-

@@ -1,0 +1,74 @@
+{
+  "default_user": [
+    {
+      "role": "user",
+      "text": "what do you mean by hackathon?",
+      "category": "general"
+    },
+    {
+      "role": "bot",
+      "text": "\ud83d\udd25 Tell me more about that. Stay smooth, my friend!",
+      "category": "general"
+    },
+    {
+      "role": "user",
+      "text": "hello",
+      "category": "greeting"
+    },
+    {
+      "role": "bot",
+      "text": "\ud83d\ude0e Hey there! What's vibing? \ud83d\ude09 What's good?",
+      "category": "greeting"
+    },
+    {
+      "role": "user",
+      "text": "hello",
+      "category": "greeting"
+    },
+    {
+      "role": "bot",
+      "text": "\ud83d\ude0e Hi! Good to see you! What's good?",
+      "category": "greeting"
+    },
+    {
+      "role": "user",
+      "text": "i like to gym",
+      "category": "motivation"
+    },
+    {
+      "role": "bot",
+      "text": "\ud83d\udcaa You don't skip leg day, do you? Stay vibing! Keep grinding, champ!",
+      "category": "motivation"
+    },
+    {
+      "role": "user",
+      "text": "how are you today?",
+      "category": "general"
+    },
+    {
+      "role": "bot",
+      "text": "\ud83d\udd25 Tell me more about that. \ud83d\ude09 Stay smooth, my friend!",
+      "category": "general"
+    },
+    {
+      "role": "user",
+      "text": "tell me about recursion",
+      "category": "technical"
+    },
+    {
+      "role": "bot",
+      "text": "\ud83d\udcbb Recursive functions call themselves, you know? Nerd mode activated!",
+      "category": "technical"
+    },
+    {
+      "role": "user",
+      "text": "what did we talked about?",
+      "category": "general"
+    },
+    {
+      "role": "bot",
+      "text": "\ud83d\udd25 We talked about: how are you today?, tell me about recursion \ud83d\ude09 Stay smooth, my friend!",
+      "category": "general"
+    }
+  ]
+}
