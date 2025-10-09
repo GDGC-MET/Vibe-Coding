@@ -4,6 +4,7 @@ import random
 import re
 
 from .base import BaseProvider
+from ..data_model import ConversationTurn
 
 
 class LocalRulesProvider(BaseProvider):
@@ -16,7 +17,7 @@ class LocalRulesProvider(BaseProvider):
             "Consistency beats intensity. Show up.",
         ]
 
-    def generate(self, prompt: str) -> str:
+    def generate(self, prompt: str, history: list[ConversationTurn] | None = None) -> str:
         text = prompt.lower()
 
         if re.search(r"gym|lift|workout|exercise|fitness", text):
@@ -30,5 +31,3 @@ class LocalRulesProvider(BaseProvider):
 
         # contribution: add more rules, intents, and templates
         return "Tell me more."
-
-

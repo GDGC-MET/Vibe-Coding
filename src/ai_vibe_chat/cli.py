@@ -5,15 +5,25 @@ from typing import Dict, Type
 
 import click
 from colorama import Fore, Style, init as colorama_init
+from dotenv import load_dotenv
 
-from .engine import Engine
+from .data_model import ConversationTurn
+from .engine import Engine, Provider
 from .personalities import RizzPersonality, SarcasticPersonality
 from .providers import LocalRulesProvider
+from .providers.perplexity import PerplexityProvider
+from .providers.gemini import GeminiProvider
 
 
 PERSONALITIES: Dict[str, Type] = {
     "rizz": RizzPersonality,
     "sarcastic": SarcasticPersonality,
+}
+
+PROVIDERS: Dict[str, Type[Provider]] = {
+    "local-rules": LocalRulesProvider,
+    "perplexity": PerplexityProvider,
+    "gemini": GeminiProvider,
 }
 
 
@@ -27,6 +37,7 @@ def _print_bot(name: str, text: str) -> None:
 
 @click.command()
 @click.option("--personality", "personality_name", default="rizz", show_default=True)
+@click.option("--provider", "provider_name", default="local-rules", show_default=True, type=click.Choice(list(PROVIDERS.keys())))
 @click.option(
     "--inject-error",
     "inject_error",
@@ -34,12 +45,28 @@ def _print_bot(name: str, text: str) -> None:
     default=None,
     help="Inject a controlled error for testing: startup | personality | provider | response",
 )
-def main(personality_name: str, inject_error: str | None = None) -> None:
+@click.option("--memory", "memory", is_flag=True, default=False, help="Enable conversation memory.")
+def main(personality_name: str, provider_name: str, inject_error: str | None = None, memory: bool = False) -> None:
+    """CLI entrypoint for AI Vibe Chat.
+
+    Validates options, constructs the Engine, and runs a simple REPL.
+    """
+    load_dotenv()
     colorama_init(autoreset=True)
 
     PersonalityCls = PERSONALITIES.get(personality_name)
     if PersonalityCls is None:
         click.echo(f"Unknown personality: {personality_name}. Try one of: {', '.join(PERSONALITIES)}")
+        sys.exit(2)
+
+    ProviderCls = PROVIDERS.get(provider_name)
+    if ProviderCls is None:
+        click.echo(f"Unknown provider: {provider_name}. Try one of: {', '.join(PROVIDERS)}")
+        sys.exit(2)
+
+    # There are no conflicting flags currently; enforce simple invariants here if needed
+    if inject_error is not None and inject_error.lower() not in {"startup", "personality", "provider", "response"}:
+        click.echo("Invalid --inject-error option")
         sys.exit(2)
 
     # Inject an immediate startup error before constructing components
@@ -50,7 +77,7 @@ def main(personality_name: str, inject_error: str | None = None) -> None:
 
     # Optionally wrap the personality to throw during styling
     if inject_error and inject_error.lower() == "personality":
-        class BreakingPersonality(PersonalityCls):  # type: ignore[misc]
+        class BreakingPersonality(PersonalityCls):  # type: ignore[misc, valid-type]
             def style_prompt(self, user_text: str) -> str:  # type: ignore[override]
                 raise RuntimeError("Injected personality failure in style_prompt")
 
@@ -60,18 +87,28 @@ def main(personality_name: str, inject_error: str | None = None) -> None:
         personality = BreakingPersonality()
 
     # Choose provider; optionally make it faulty
+    provider: Provider
     if inject_error and inject_error.lower() == "provider":
         class FaultyProvider(LocalRulesProvider):  # type: ignore[misc]
-            def generate(self, prompt: str) -> str:  # type: ignore[override]
+            def generate(self, prompt: str, history: list[ConversationTurn] | None = None) -> str:  # type: ignore[override]
                 raise RuntimeError("Injected provider failure in generate")
 
         provider = FaultyProvider()
     else:
-        provider = LocalRulesProvider()
-    engine = Engine(provider=provider, personality=personality)
+        try:
+            provider = ProviderCls()
+        except ValueError as e:
+            click.echo(f"Error initializing provider: {e}", err=True)
+            sys.exit(1)
+
+    engine = Engine(provider=provider, personality=personality, memory=memory)
 
     click.echo(Fore.GREEN + "AI Vibe Chat 🌀" + Style.RESET_ALL)
-    click.echo(f"Personality: {personality.name}\nType 'quit' to exit.\n")
+    click.echo(f"Personality: {personality.name}")
+    click.echo(f"Provider: {provider.name}")
+    if memory:
+        click.echo("Memory: " + Fore.GREEN + "ON" + Style.RESET_ALL)
+    click.echo("Type 'quit' to exit.\n")
 
     while True:
         try:

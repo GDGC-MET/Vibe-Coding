@@ -15,6 +15,8 @@ dependencies = [
 
 [project.scripts]
 ai-vibe-chat = "ai_vibe_chat.cli:main"
+ai-vibe-chat-gui = "ai_vibe_chat.gui:main"
+ai-vibe-chat-web = "ai_vibe_chat.webapp:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}

@@ -1,8 +1,11 @@
+LICENSE
 README.md
 pyproject.toml
 src/ai_vibe_chat/__init__.py
 src/ai_vibe_chat/cli.py
+src/ai_vibe_chat/data_model.py
 src/ai_vibe_chat/engine.py
+src/ai_vibe_chat/file_manager.py
 src/ai_vibe_chat.egg-info/PKG-INFO
 src/ai_vibe_chat.egg-info/SOURCES.txt
 src/ai_vibe_chat.egg-info/dependency_links.txt
@@ -16,3 +19,8 @@ src/ai_vibe_chat/personalities/sarcastic.py
 src/ai_vibe_chat/providers/__init__.py
 src/ai_vibe_chat/providers/base.py
 src/ai_vibe_chat/providers/local_rules.py
+tests/test_cli.py
+tests/test_engine.py
+tests/test_file_manager.py
+tests/test_integration.py
+tests/test_persistence_restart.py

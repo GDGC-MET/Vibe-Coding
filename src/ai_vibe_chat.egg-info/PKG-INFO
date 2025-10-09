@@ -4,8 +4,10 @@ Version: 0.1.0
 Summary: AI Vibe Chat / Personality Bot
 Requires-Python: >=3.9
 Description-Content-Type: text/markdown
+License-File: LICENSE
 Requires-Dist: click>=8.1.7
 Requires-Dist: colorama>=0.4.6
+Dynamic: license-file
 
 AI VIBE CHAT / Personality Bot (Python)
 
@@ -21,6 +23,8 @@ Quickstart
 
 2) Run the CLI
      python -m ai_vibe_chat.cli --personality rizz
+     # with persistent memory
+     python -m ai_vibe_chat.cli --personality rizz --memory
 
 Features (Current)
 
@@ -30,9 +34,9 @@ Features (Current)
 
 Intentionally Incomplete (Great First Issues)
 
-- Conversation memory
-  - Store previous turns and use them for context.
-  - Add a `--memory` flag and persistence (JSON file or simple DB).
+- Memory enhancements
+  - Configurable history file location and size limits.
+  - Session management and summarization for long chats.
 
 - Better response generation
   - Improve `LocalRulesProvider` with pattern matching, templates, and small talk.
@@ -88,6 +92,25 @@ Install in Editable Mode (optional)
 CLI Usage
 
   python -m ai_vibe_chat.cli --personality rizz
+  python -m ai_vibe_chat.cli --personality rizz --memory
+
+Persistence
+
+  When --memory is used, a conversation_history.json file is created in the current working directory containing a list of turns like:
+
+  [
+    {"speaker": "user", "text": "give me gym motivation"},
+    {"speaker": "bot", "text": "Bro, those weights aren’t gonna lift themselves. One more set. Own it."}
+  ]
+
+Troubleshooting
+
+- Windows: If "python" fails to launch or opens Microsoft Store, disable App execution aliases (Settings > Apps > Advanced app settings > App execution aliases) or install Python via winget:
+
+  winget install --id Python.Python.3.12 -e
+
+- Memory file location: conversation_history.json is created in your current working directory when --memory is enabled. Run from a directory where you want the file to live.
+- Permissions: If saving fails, the file manager restores from a .bak and logs an error; check write permissions in the working directory.
 
 Examples
 
@@ -115,8 +138,11 @@ Open Task Ideas
 - Add simple config file support (YAML/TOML)
 - Add optional TTS output
 
+![AI Vibe Chat Screenshot](screenshot.png)
+
 License
 
 MIT
+
 
 

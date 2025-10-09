@@ -1,67 +1,45 @@
-AI VIBE CHAT / Personality Bot (Python)
+AI VIBE CHAT / Personality Bot — Full Project Guide
 
-A local, themed chatbot that speaks in a sassy, fun, or custom personality (e.g., rizzbot, sarcastic). The codebase is intentionally a bit incomplete to encourage Hacktoberfest contributions.
+Overview
+- A local-first chatbot with pluggable “Personalities” (rizz, sarcastic, …) and “Providers” (local rules, Perplexity, Gemini) wrapped by a simple Engine and exposed via:
+  - CLI for quick REPL
+  - Flask web server with JSON API
+  - Production-ready React (Vite + TypeScript) frontend that talks to the JSON API
+- Security-conscious: API keys live only on the backend (.env), never in the browser.
 
-Quickstart
+Key Features
+- Personality + Provider pipeline coordinated by an Engine
+- Providers: local-rules (no API), Perplexity, Gemini (Google Generative AI)
+- Personalities: rizz, sarcastic (easy to extend)
+- Optional conversation memory persisted to disk
+- Web JSON API + modern React UI (dev proxy + production build served by Flask)
 
-1) Create a virtualenv and install deps
-   - Windows PowerShell
-     python -m venv .venv
-     .\.venv\Scripts\Activate.ps1
-     pip install -r requirements.txt
+Architecture
+- Backend (Flask, Python)
+  - webapp.py: Flask app exposing HTML + JSON API, loads .env and serves the built frontend
+  - engine.py: Orchestrates Provider and Personality, handles optional memory persistence
+  - providers/: LocalRulesProvider, PerplexityProvider, GeminiProvider
+  - personalities/: RizzPersonality, SarcasticPersonality
+  - file_manager.py: manages conversation_history.json when memory is enabled
+  - data_model.py: ConversationTurn dataclass
+- Frontend (Vite + React + TypeScript)
+  - src/components: Settings panel and Chat UI
+  - Uses /api endpoints via axios, no secrets in client
 
-2) Run the CLI
-     python -m ai_vibe_chat.cli --personality rizz
-
-Features (Current)
-
-- Minimal pluggable architecture: Provider + Personality → Engine → CLI
-- Personalities: rizz, sarcastic (basic transformation)
-- Local rules provider: naive rule-based response generator
-
-Intentionally Incomplete (Great First Issues)
-
-- Conversation memory
-  - Store previous turns and use them for context.
-  - Add a `--memory` flag and persistence (JSON file or simple DB).
-
-- Better response generation
-  - Improve `LocalRulesProvider` with pattern matching, templates, and small talk.
-  - Add temperature/creativity controls.
-
-- Personality system
-  - Formalize a registry; discover personalities dynamically.
-  - Add more personalities (e.g., wholesome, pirate, yoda, mentor, roast master).
-
-- Provider interfaces
-  - Add a `LocalLLMProvider` interface (even if stubbed) to swap in future models.
-  - Add a `--provider` CLI flag and wire it to the engine.
-
-- TTS/Speech I/O (optional)
-  - Text-to-speech for replies and speech-to-text for input.
-  - Add a `--speak` flag and configurable voices.
-
-- UX polish
-  - Colored output per speaker, timestamps, and typing indicator.
-  - Add `/help`, `/clear`, `/save`, `/load` commands.
-
-How It Works
-
-- `engine.Engine` orchestrates personalities and providers.
-- `personalities` decorate prompts/outputs with a style.
-- `providers` generate responses (currently simple rules).
-- `cli` provides a REPL with personality selection.
-
-Repository Layout
-
-ai-vibe-chat/
+Directory Layout
+```text path=null start=null
+AI-VIBE-CHAT-Personality-Bot--Vibe-Coding/
   requirements.txt
-  README.md
+  pyproject.toml
+  README.md   <— this file
   src/
     ai_vibe_chat/
       __init__.py
       cli.py
       engine.py
+      data_model.py
+      file_manager.py
+      webapp.py
       personalities/
         __init__.py
         base.py
@@ -71,46 +49,169 @@ ai-vibe-chat/
         __init__.py
         base.py
         local_rules.py
+        perplexity.py
+        gemini.py
+  frontend/
+    package.json
+    tsconfig.json
+    vite.config.ts
+    index.html
+    src/
+      main.tsx
+      App.tsx
+      api.ts
+      types.ts
+      components/
+        Chat.tsx
+        Settings.tsx
+      styles.css
+```
 
-Install in Editable Mode (optional)
+Backend: Setup and Run
+Prerequisites
+- Python 3.11+ (3.12 recommended)
+- Windows PowerShell or any shell
 
-  pip install -e .
+Install dependencies
+```powershell path=null start=null
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+```
 
-CLI Usage
+Environment variables (.env supported)
+- Create a .env file in the project root if you prefer not to export variables in the shell.
+- Gemini (recommended):
+```text path=null start=null
+GEMINI_API_KEY=your-api-key
+# optional
+GEMINI_MODEL=gemini-1.5-flash
+```
+- Alternatively use GOOGLE_API_KEY as the key variable name.
+- Perplexity (optional):
+```text path=null start=null
+PERPLEXITY_API_KEY=your-api-key
+PERPLEXITY_MODEL=llama-3.1-mini
+```
 
-  python -m ai_vibe_chat.cli --personality rizz
+Run the backend (Flask web server)
+```powershell path=null start=null
+# from project root
+python -m ai_vibe_chat.webapp
+# then open http://127.0.0.1:5000
+```
+- PORT can be customized via PORT env var.
+- The server auto-loads .env at startup.
 
-Examples
+Backend: JSON API
+- Base URL: http://127.0.0.1:5000/api
+- Endpoints:
+  - GET /settings → current configuration and available options
+  - POST /settings → apply { personality?, provider?, memory? }
+  - POST /chat → send { text } and receive { reply }
 
-  You: give me gym motivation
-  Bot: Bro, those weights aren’t gonna lift themselves. One more set. Own it.
+Example requests
+```bash path=null start=null
+# get settings
+curl http://127.0.0.1:5000/api/settings
 
-  You: explain recursion simply
-  Bot: Think mirrors facing mirrors. A thing that uses a smaller version of itself.
+# update settings
+curl -X POST http://127.0.0.1:5000/api/settings \
+  -H "Content-Type: application/json" \
+  -d '{"personality":"rizz","provider":"gemini","memory":true}'
 
-Contributing Guidelines (Hacktoberfest)
+# chat
+curl -X POST http://127.0.0.1:5000/api/chat \
+  -H "Content-Type: application/json" \
+  -d '{"text":"Hello!"}'
+```
 
-1) Pick an issue labeled good-first-issue or help-wanted
-2) Create a feature branch
-3) Add tests where reasonable
-4) Keep PRs focused and small
-5) Describe your change and how to test it
+Providers
+- local-rules: built-in, no keys needed
+- perplexity: requires PERPLEXITY_API_KEY
+- gemini: requires GEMINI_API_KEY or GOOGLE_API_KEY; optional GEMINI_MODEL (default: gemini-1.5-flash)
 
-Open Task Ideas
+Personalities
+- rizz: playful, confident
+- sarcastic: witty, dry
+- How to add your own: create a new file under src/ai_vibe_chat/personalities/ implementing style_prompt and style_response, then register it.
 
-- Implement conversation memory with a pluggable store
-- Add personality discovery + `--list-personalities`
-- Improve rule engine: intents, entities, templated responses
-- Add `/help`, `/clear`, `/save`, `/load` commands to CLI
-- Add colorized output and better formatting
-- Add simple config file support (YAML/TOML)
-- Add optional TTS output
+Memory Persistence
+- Enable memory via CLI flag --memory or by toggling in the frontend settings
+- When enabled, conversation_history.json is created in the current working directory; a .bak is used for resilience
 
-![AI Vibe Chat Screenshot](screenshot.png)
+CLI Usage (optional)
+```powershell path=null start=null
+# basic
+python -m ai_vibe_chat.cli --personality rizz
+
+# with memory
+python -m ai_vibe_chat.cli --personality rizz --memory
+
+# choose provider
+python -m ai_vibe_chat.cli --personality rizz --provider gemini
+```
+
+Frontend: Setup and Run
+Prerequisites
+- Node.js 18+ and npm
+
+Install and run in dev
+```powershell path=null start=null
+cd frontend
+npm install
+npm run dev
+# open http://localhost:5173
+```
+- The dev server proxies /api to http://127.0.0.1:5000.
+- You can override the API base with VITE_API_BASE if needed.
+
+Build for production
+```powershell path=null start=null
+cd frontend
+npm run build
+# creates frontend/dist
+```
+- When frontend/dist exists, the Flask app will serve it automatically at /.
+
+Security Notes
+- Do not expose API keys in the frontend or commit them to git.
+- Keep keys in .env (loaded server-side) or your process environment.
+- The browser talks only to your backend; the backend talks to Gemini/Perplexity.
+
+Testing and Quality
+```powershell path=null start=null
+# Python tests
+pytest
+
+# Linting / type checking
+ruff .
+mypy .
+```
+
+Deployment (basic guidance)
+- Small deployments can use the built-in Flask server for local/network testing.
+- For production, consider running behind a proper HTTP server (e.g., nginx) and a WSGI server (gunicorn/uwsgi on Linux). On Windows, consider waitress.
+- Ensure .env or environment variables are configured in your host environment.
+
+Troubleshooting
+- Python opens Microsoft Store on Windows: disable App execution aliases or install Python via winget.
+```powershell path=null start=null
+winget install --id Python.Python.3.12 -e
+```
+- Cannot find API key: ensure GEMINI_API_KEY or GOOGLE_API_KEY is present in your environment or .env.
+- File permission errors: make sure the working directory is writable for conversation_history.json when memory is enabled.
+
+Roadmap Ideas
+- Advanced memory (summarization, multi-session)
+- More personalities and dynamic discovery
+- Provider options (temperature, top_p, system prompts)
+- TTS/Speech I/O
+- In-app help commands
+
+Contributing
+- Fork the repo, create a feature branch, keep PRs focused, add tests when reasonable, and describe how to test your change.
 
 License
-
 MIT
-
-
 
