@@ -1,0 +1,2 @@
+[console_scripts]
+ai-vibe-chat = ai_vibe_chat.cli:main
