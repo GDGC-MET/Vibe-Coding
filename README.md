@@ -1,59 +1,72 @@
-AI VIBE CHAT / Personality Bot (Python)
+# AI VIBE CHAT / Personality Bot (Python)
 
 A local, themed chatbot that speaks in a sassy, fun, or custom personality (e.g., rizzbot, sarcastic). The codebase is intentionally a bit incomplete to encourage Hacktoberfest contributions.
 
-Quickstart
+## Quickstart
 
-1) Create a virtualenv and install deps
-   - Windows PowerShell
-     python -m venv .venv
-     .\.venv\Scripts\Activate.ps1
-     pip install -r requirements.txt
+### 1) Create a virtualenv and install deps
 
-2) Run the CLI
-     python -m ai_vibe_chat.cli --personality rizz
+**Windows PowerShell:**
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+```
 
-Features (Current)
+**macOS/Linux:**
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+### 2) Run the CLI
+```bash
+python -m ai_vibe_chat.cli --personality rizz
+```
+
+## Features (Current)
 
 - Minimal pluggable architecture: Provider + Personality → Engine → CLI
 - Personalities: rizz, sarcastic (basic transformation)
 - Local rules provider: naive rule-based response generator
 
-Intentionally Incomplete (Great First Issues)
+## Intentionally Incomplete (Great First Issues)
 
-- Conversation memory
-  - Store previous turns and use them for context.
-  - Add a `--memory` flag and persistence (JSON file or simple DB).
+### Conversation memory
+- Store previous turns and use them for context.
+- Add a `--memory` flag and persistence (JSON file or simple DB).
 
-- Better response generation
-  - Improve `LocalRulesProvider` with pattern matching, templates, and small talk.
-  - Add temperature/creativity controls.
+### Better response generation
+- Improve `LocalRulesProvider` with pattern matching, templates, and small talk.
+- Add temperature/creativity controls.
 
-- Personality system
-  - Formalize a registry; discover personalities dynamically.
-  - Add more personalities (e.g., wholesome, pirate, yoda, mentor, roast master).
+### Personality system
+- Formalize a registry; discover personalities dynamically.
+- Add more personalities (e.g., wholesome, pirate, yoda, mentor, roast master).
 
-- Provider interfaces
-  - Add a `LocalLLMProvider` interface (even if stubbed) to swap in future models.
-  - Add a `--provider` CLI flag and wire it to the engine.
+### Provider interfaces
+- Add a `LocalLLMProvider` interface (even if stubbed) to swap in future models.
+- Add a `--provider` CLI flag and wire it to the engine.
 
-- TTS/Speech I/O (optional)
-  - Text-to-speech for replies and speech-to-text for input.
-  - Add a `--speak` flag and configurable voices.
+### TTS/Speech I/O (optional)
+- Text-to-speech for replies and speech-to-text for input.
+- Add a `--speak` flag and configurable voices.
 
-- UX polish
-  - Colored output per speaker, timestamps, and typing indicator.
-  - Add `/help`, `/clear`, `/save`, `/load` commands.
+### UX polish
+- Colored output per speaker, timestamps, and typing indicator.
+- Add `/help`, `/clear`, `/save`, `/load` commands.
 
-How It Works
+## How It Works
 
 - `engine.Engine` orchestrates personalities and providers.
 - `personalities` decorate prompts/outputs with a style.
 - `providers` generate responses (currently simple rules).
 - `cli` provides a REPL with personality selection.
 
-Repository Layout
+## Repository Layout
 
+```
 ai-vibe-chat/
   requirements.txt
   README.md
@@ -71,32 +84,37 @@ ai-vibe-chat/
         __init__.py
         base.py
         local_rules.py
+```
 
-Install in Editable Mode (optional)
+## Install in Editable Mode (optional)
 
-  pip install -e .
+```bash
+pip install -e .
+```
 
-CLI Usage
+## CLI Usage
 
-  python -m ai_vibe_chat.cli --personality rizz
+```bash
+python -m ai_vibe_chat.cli --personality rizz
+```
 
-Examples
+## Examples
 
-  You: give me gym motivation
-  Bot: Bro, those weights aren’t gonna lift themselves. One more set. Own it.
+**You:** give me gym motivation  
+**Bot:** Bro, those weights aren't gonna lift themselves. One more set. Own it.
 
-  You: explain recursion simply
-  Bot: Think mirrors facing mirrors. A thing that uses a smaller version of itself.
+**You:** explain recursion simply  
+**Bot:** Think mirrors facing mirrors. A thing that uses a smaller version of itself.
 
-Contributing Guidelines (Hacktoberfest)
+## Contributing Guidelines (Hacktoberfest)
 
-1) Pick an issue labeled good-first-issue or help-wanted
-2) Create a feature branch
-3) Add tests where reasonable
-4) Keep PRs focused and small
-5) Describe your change and how to test it
+1. Pick an issue labeled `good-first-issue` or `help-wanted`
+2. Create a feature branch
+3. Add tests where reasonable
+4. Keep PRs focused and small
+5. Describe your change and how to test it
 
-Open Task Ideas
+## Open Task Ideas
 
 - Implement conversation memory with a pluggable store
 - Add personality discovery + `--list-personalities`
@@ -108,7 +126,7 @@ Open Task Ideas
 
 ![AI Vibe Chat Screenshot](screenshot.png)
 
-License
+## License
 
 MIT
 
