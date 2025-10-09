@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from .personalities.wholesome import WholesomePersonality
+from ai_vibe_chat.personalities.wholesome import WholesomePersonality
+
 import sys
 from typing import Dict, Type
 
@@ -12,6 +15,7 @@ from .providers import LocalRulesProvider
 
 
 PERSONALITIES: Dict[str, Type] = {
+    "wholesome": WholesomePersonality,
     "rizz": RizzPersonality,
     "sarcastic": SarcasticPersonality,
 }
