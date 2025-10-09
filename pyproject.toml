@@ -1,20 +1,58 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "ai-vibe-chat"
 version = "0.1.0"
-description = "AI Vibe Chat / Personality Bot"
+description = "A personality-driven chatbot with sassy vibes"
+authors = [
+    {name = "AI Vibe Chat Contributors"},
+]
 readme = "README.md"
+license = {text = "MIT"}
 requires-python = ">=3.9"
+keywords = ["chatbot", "ai", "personality", "hacktoberfest"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
 dependencies = [
-  "click>=8.1.7",
-  "colorama>=0.4.6",
+    "click>=8.1.7",
+    "colorama>=0.4.6",
+    "rich>=13.7.1",
 ]
 
 [project.scripts]
 ai-vibe-chat = "ai_vibe_chat.cli:main"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "black>=23.0.0", 
+    "flake8>=6.0.0",
+    "mypy>=1.0.0",
+]
+test = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+]
+docs = [
+    "mkdocs>=1.5.0",
+    "mkdocs-material>=9.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/krishna67890/ai-vibe-chat"
+Repository = "https://github.com/krishna67890/ai-vibe-chat"
+"Issue Tracker" = "https://github.com/krishna67890/ai-vibe-chat/issues"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
@@ -22,3 +60,31 @@ package-dir = {"" = "src"}
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.black]
+line-length = 88
+target-version = ['py39']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  | \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "W503"]
+exclude = [".git", "__pycache__", "build", "dist", "*.egg-info"]
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
