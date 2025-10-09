@@ -1,0 +1,2 @@
+from ai_vibe_chat.typing_indicator
+import typing_indicator
