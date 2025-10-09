@@ -1,7 +1,20 @@
 click>=8.1.7
 colorama>=0.4.6
+requests>=2.32.0
+flask>=3.0.0
+flask-cors>=4.0.0
+python-dotenv
+google-generativeai>=0.8.2
 
 # Optional/dev (comment the ones you don't need)
 # rich>=13.7.1
 # pyttsx3>=2.90
 # pyyaml>=6.0.2
+
+# Testing
+pytest
+
+# Linting and Type Checking
+ruff
+mypy
+types-colorama

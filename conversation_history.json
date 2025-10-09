@@ -1,0 +1,138 @@
+[
+  {
+    "speaker": "user",
+    "text": "hello"
+  },
+  {
+    "speaker": "bot",
+    "text": "\ud83d\udd25 Hey there! What's vibing? Stay smooth."
+  },
+  {
+    "speaker": "user",
+    "text": "tell me a joke"
+  },
+  {
+    "speaker": "bot",
+    "text": "\ud83d\udd25 Tell me more. Stay smooth."
+  },
+  {
+    "speaker": "user",
+    "text": "yo"
+  },
+  {
+    "speaker": "bot",
+    "text": "\ud83d\udd25 Tell me more. Stay smooth."
+  },
+  {
+    "speaker": "user",
+    "text": "hows the vibe"
+  },
+  {
+    "speaker": "bot",
+    "text": "\ud83d\udd25 Tell me more. Stay smooth."
+  },
+  {
+    "speaker": "user",
+    "text": "yooo"
+  },
+  {
+    "speaker": "bot",
+    "text": "\ud83d\udd25 Tell me more. Stay smooth."
+  },
+  {
+    "speaker": "user",
+    "text": "whats up"
+  },
+  {
+    "speaker": "bot",
+    "text": "\ud83d\udd25 Tell me more. Stay smooth."
+  },
+  {
+    "speaker": "user",
+    "text": "yoo"
+  },
+  {
+    "speaker": "bot",
+    "text": "\ud83d\udd25 Error calling Perplexity API: 400 Client Error: Bad Request for url: https://api.perplexity.ai/chat/completions Stay smooth."
+  },
+  {
+    "speaker": "user",
+    "text": "whats up"
+  },
+  {
+    "speaker": "bot",
+    "text": "\ud83d\udd25 Error calling Perplexity API: 400 Client Error: Bad Request for url: https://api.perplexity.ai/chat/completions Stay smooth."
+  },
+  {
+    "speaker": "user",
+    "text": "yoo"
+  },
+  {
+    "speaker": "bot",
+    "text": "\ud83d\udd25 Error calling Perplexity API: 400 Client Error: Bad Request for url: https://api.perplexity.ai/chat/completions Stay smooth."
+  },
+  {
+    "speaker": "user",
+    "text": "yo"
+  },
+  {
+    "speaker": "bot",
+    "text": "\ud83d\udd25 Error calling Perplexity API: 400 Client Error: Bad Request for url: https://api.perplexity.ai/chat/completions Stay smooth."
+  },
+  {
+    "speaker": "user",
+    "text": "yoo"
+  },
+  {
+    "speaker": "bot",
+    "text": "\ud83d\udd25 Error calling Perplexity API: 400 Bad Request: Invalid model 'llama-3.1-sonar-small-128k-online'. Permitted models can be found in the documentation at https://docs.perplexity.ai/getting-started/models. Stay smooth."
+  },
+  {
+    "speaker": "user",
+    "text": "yo"
+  },
+  {
+    "speaker": "bot",
+    "text": "\ud83d\udd25 Error calling Perplexity API: 400 Bad Request: Invalid model 'llama-3.1-sonar-small-128k-online'. Permitted models can be found in the documentation at https://docs.perplexity.ai/getting-started/models. Stay smooth."
+  },
+  {
+    "speaker": "user",
+    "text": "whats up"
+  },
+  {
+    "speaker": "bot",
+    "text": "\ud83d\udd25 Error calling Perplexity API: 400 Bad Request: Invalid model 'llama-3.1-sonar-small-128k-online'. Permitted models can be found in the documentation at https://docs.perplexity.ai/getting-started/models. Stay smooth."
+  },
+  {
+    "speaker": "user",
+    "text": "yoo"
+  },
+  {
+    "speaker": "bot",
+    "text": "\ud83d\udd25 Error calling Perplexity API: 400 Bad Request: Invalid model 'lllama-3-sonar-small-32k-online'. Permitted models can be found in the documentation at https://docs.perplexity.ai/getting-started/models. Stay smooth."
+  },
+  {
+    "speaker": "user",
+    "text": "whats up"
+  },
+  {
+    "speaker": "bot",
+    "text": "\ud83d\udd25 Tell me more. Stay smooth."
+  },
+  {
+    "speaker": "user",
+    "text": "hi"
+  },
+  {
+    "speaker": "bot",
+    "text": "\ud83d\udd25 Hey there! What's vibing? Stay smooth."
+  },
+  {
+    "speaker": "user",
+    "text": "jothing much what about you"
+  },
+  {
+    "speaker": "bot",
+    "text": "\ud83d\udd25 Hey there! What's vibing? Stay smooth."
+  }
+]
