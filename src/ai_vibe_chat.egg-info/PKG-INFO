@@ -4,8 +4,10 @@ Version: 0.1.0
 Summary: AI Vibe Chat / Personality Bot
 Requires-Python: >=3.9
 Description-Content-Type: text/markdown
+License-File: LICENSE
 Requires-Dist: click>=8.1.7
 Requires-Dist: colorama>=0.4.6
+Dynamic: license-file
 
 AI VIBE CHAT / Personality Bot (Python)
 
@@ -115,8 +117,11 @@ Open Task Ideas
 - Add simple config file support (YAML/TOML)
 - Add optional TTS output
 
+![AI Vibe Chat Screenshot](screenshot.png)
+
 License
 
 MIT
+
 
 

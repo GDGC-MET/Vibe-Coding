@@ -1,3 +1,4 @@
+LICENSE
 README.md
 pyproject.toml
 src/ai_vibe_chat/__init__.py
